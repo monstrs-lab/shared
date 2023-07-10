@@ -1,6 +1,10 @@
 name: Checks
 
-on: [pull_request]
+on:
+  workflow_call:
+    secrets:
+      token:
+        required: true
 
 jobs:
   run:
@@ -9,10 +13,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.token }}
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
+          token: ${{ secrets.token }}
           node-version: '19'
 
       - name: Install
@@ -21,26 +28,26 @@ jobs:
       - name: Lint
         run: yarn checks lint
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: ${{ secrets.token }}
 
       - name: TypeCheck
         run: yarn checks typecheck
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: ${{ secrets.token }}
 
       - name: TestUnit
         run: yarn checks test unit
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: ${{ secrets.token }}
           NODE_OPTIONS: --experimental-vm-modules
 
       - name: TestIntegration
         run: yarn checks test integration
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: ${{ secrets.token }}
           NODE_OPTIONS: --experimental-vm-modules
 
       - name: Release
         run: yarn checks release
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: ${{ secrets.token }}
