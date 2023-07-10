@@ -37,7 +37,4 @@ jobs:
           committer_name: GitHub Actions
           committer_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: 'chore(common): publish'
-          add:
-            - '*.lock'
-            - '*.json'
-            - '*.yml'
+          add: '["*.lock", "*.json", "*.yml"]'
