@@ -37,7 +37,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          committer_name: GitHub Actions
-          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+          default_author: github_actions
           message: 'chore(common): publish'
           add: '["*.lock", "*.json", "*.yml"]'
