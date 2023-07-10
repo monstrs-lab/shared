@@ -1,7 +1,7 @@
 name: Publish
 
 on:
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   run:
@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '19'
+          node-version: 19
 
       - name: Install
         run: yarn install
@@ -30,11 +30,12 @@ jobs:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
       - name: Commit changes
-        uses: EndBug/add-and-commit@v7
+        uses: EndBug/add-and-commit@v9
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          author_name: github-actions
-          author_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: 'chore(common): publish'
-          branch: master
+          add:
+            - '*.lock'
+            - '*.json'
+            - '*.yml'
