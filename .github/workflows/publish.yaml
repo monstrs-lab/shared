@@ -2,6 +2,9 @@ name: Publish
 
 on:
   workflow_call:
+    secrets:
+      npmAuthToken:
+        required: true
 
 jobs:
   run:
@@ -27,7 +30,7 @@ jobs:
           yarn version apply --all
           yarn workspaces changed foreach --verbose --topological --no-private npm publish --access public
         env:
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.npmAuthToken }}
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
